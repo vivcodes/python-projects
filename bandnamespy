@@ -8,3 +8,22 @@ print("Welcome to the Band Name Generator.")
 street = input("What's the name of the city you grew up in?\n")
 pet = input("What's your pet's name?\n")
 print("Your band name could be " + street + " " + pet)
+#or more fun version:!!!.
+import random
+
+print("Welcome to the Random Band Name Generator!")
+city = input("What's the name of the city you grew up in?\n")
+pet = input("What's your first pet's name?\n")
+color = input("What's your favorite color?\n")
+hobby = input("What's your favorite hobby?\n")
+
+options = [
+    f"{color} {pet}",
+    f"{hobby} in {city}",
+    f"{city} {color}",
+    f"The {pet} {color}",
+    f"{color} {hobby}",
+    f"The {city} {hobby}"
+]
+
+print("Your band name could be: " + random.choice(options))
