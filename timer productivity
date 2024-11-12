@@ -1,0 +1,143 @@
+#The app is a Productivity Timer designed to manage different timers for work and breaks (like the Pomodoro technique). 
+It allows the user to select a timer, start, pause, and stop it. The app also updates the timer display in real-time 
+and gives notifications when the timer completes
+
+import tkinter as tk
+from tkinter import messagebox
+import time
+import threading
+
+class ProductivityTimer:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Productivity Timer")
+        self.root.geometry("400x500")
+        self.root.configure(bg="#f0f4f8")
+
+        # Timer configurations and states
+        self.timers = {
+            "Work Timer (25 mins)": 25 * 60,
+            "Water Break (15 mins)": 15 * 60,
+            "Stretch Break (25 mins)": 25 * 60,
+            "Snack Break (2 hours)": 2 * 60 * 60
+        }
+
+        self.active_timers = {}
+
+        # UI Components
+        self.create_main_menu()
+
+    def create_main_menu(self):
+        # Clear window for main menu
+        for widget in self.root.winfo_children():
+            widget.destroy()
+
+        # Title Label with black color text
+        title_label = tk.Label(self.root, text="Select a Timer", font=("Poppins", 20, "bold"), bg="#f0f4f8", fg="#000000")
+        title_label.pack(pady=30)
+
+        # Timer buttons with gradient color
+        for timer_name, duration in self.timers.items():
+            btn = tk.Button(
+                self.root, text=timer_name, font=("Poppins", 10), 
+                relief="flat", width=20, height=2, bd=0, padx=5, pady=5,
+                bg="#FF7E5F", fg="white", activebackground="#feb47b", 
+                command=lambda name=timer_name, dur=duration: self.start_new_timer(name, dur)
+            )
+            self.add_gradient_hover_effect(btn)
+            self.set_button_colors(btn)  # Ensure button color is set even when unfocused
+            btn.pack(pady=8)
+
+    def start_new_timer(self, timer_name, duration):
+        if timer_name in self.active_timers:
+            messagebox.showinfo("Error", f"The timer '{timer_name}' is already running.")
+            return
+
+        # Create new frame for this timer
+        timer_frame = tk.Frame(self.root, bg="#f0f4f8")
+        timer_frame.pack(pady=10, fill="x")
+
+        # Timer Label and countdown display
+        timer_label = tk.Label(timer_frame, text=timer_name, font=("Poppins", 14), bg="#f0f4f8", fg="#333")
+        timer_label.pack()
+
+        countdown_label = tk.Label(timer_frame, text="00:00", font=("Poppins", 36), bg="#f0f4f8", fg="#333")
+        countdown_label.pack()
+
+        # Play/Pause button
+        play_pause_button = tk.Button(timer_frame, text="▶️", font=("Poppins", 14), bg="#6a11cb", fg="white", relief="flat", 
+                                      command=lambda: self.toggle_pause(timer_name))
+        self.add_gradient_hover_effect(play_pause_button)
+        self.set_button_colors(play_pause_button)  # Ensure button color is set even when unfocused
+        play_pause_button.pack(pady=5)
+
+        # Close button (X)
+        close_button = tk.Button(timer_frame, text="❌", font=("Poppins", 14), bg="#ff416c", fg="white", relief="flat",
+                                  command=lambda: self.remove_timer(timer_name))
+        self.add_gradient_hover_effect(close_button)
+        self.set_button_colors(close_button)  # Ensure button color is set even when unfocused
+        close_button.pack(side="right", pady=10)
+
+        # Add this timer to active timers list
+        self.active_timers[timer_name] = {
+            "duration": duration,
+            "remaining_time": duration,
+            "is_paused": True,
+            "label": countdown_label,
+            "play_pause_button": play_pause_button,
+            "close_button": close_button
+        }
+
+        # Start the timer in a separate thread
+        threading.Thread(target=self.run_timer, args=(timer_name,), daemon=True).start()
+
+    def run_timer(self, timer_name):
+        while timer_name in self.active_timers:
+            timer_data = self.active_timers[timer_name]
+
+            if not timer_data["is_paused"] and timer_data["remaining_time"] > 0:
+                mins, secs = divmod(timer_data["remaining_time"], 60)
+                timer_data["label"].config(text=f"{mins:02d}:{secs:02d}")
+                timer_data["remaining_time"] -= 1
+                time.sleep(1)
+                self.root.update()
+
+            if timer_data["remaining_time"] == 0:
+                messagebox.showinfo("Timer Complete", f"{timer_name} is complete!")
+                self.remove_timer(timer_name)
+
+    def toggle_pause(self, timer_name):
+        timer_data = self.active_timers[timer_name]
+        if timer_data["is_paused"]:
+            timer_data["is_paused"] = False
+            timer_data["play_pause_button"].config(text="⏸")  # Show pause button
+        else:
+            timer_data["is_paused"] = True
+            timer_data["play_pause_button"].config(text="▶️")  # Show play button
+
+    def remove_timer(self, timer_name):
+        if timer_name in self.active_timers:
+            timer_data = self.active_timers[timer_name]
+            timer_data["label"].master.destroy()
+            del self.active_timers[timer_name]
+
+    def add_gradient_hover_effect(self, button):
+        def on_enter(e):
+            button.config(bg="#feb47b")  # Hover color (lighter gradient)
+        def on_leave(e):
+            button.config(bg="#FF7E5F")  # Normal color (darker gradient)
+
+        button.bind("<Enter>", on_enter)
+        button.bind("<Leave>", on_leave)
+
+    def set_button_colors(self, button):
+        # Explicitly set the background and foreground colors to ensure consistency
+        button.config(
+            bg="#FF7E5F", fg="black", activebackground="#feb47b", 
+            relief="flat", highlightthickness=0, bd=0
+        )
+
+# Initialize the app
+root = tk.Tk()
+app = ProductivityTimer(root)
+root.mainloop()
