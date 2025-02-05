@@ -1,0 +1,134 @@
+new_messages = 2
+print(f"{new_messages} new messages")
+#this prints the value too
+print(f"{6} new messages")
+print(f"{2} new messages")
+things= not True
+one= "things are "
+#F STRING METHOD
+#print(one + str(things))  # Simplest way, converts boolean into str
+#print("{}{}".format(one, things))  # Using format method
+#print(one, things)  # Using a comma (adds space automatically)
+print(f"{one}{things}")
+objects = not False  # objects will be True
+print(objects) 
+#expressions like new-read, displays value 
+new = 5
+read = 2
+print(f"{new-read} unread messages") #result:3 unread messages
+status= f"{new} new messages"
+print(status)
+print(f"I would walk {2} miles")
+degrees= 70
+print(f"Temperature: {degrees}F")
+
+movie = "cool story movie"
+display = f"Airing tonight: {movie}"
+print(display)
+is_close = True
+is_far = not is_close
+
+print(is_far) 
+#comparison of numbers
+battery_level = 10
+low = battery_level <= 20
+print("Low battery:")
+print(low)
+points = 12
+level_two = points >= 10
+print("Level 2:")
+print(level_two)
+#another example
+solved = 20
+minimum = 10
+lost_streak = solved <= minimum
+healthy_streak = solved >= minimum 
+print(healthy_streak)
+
+#comparing strings, We can use comparisons to check if a string is equal to or not equal to another string.
+ 
+print("online" == "online") #True
+print("online" != "offline")#True
+print("apple" == "Orange" ) #False 
+#inequality operator, !=. is not equal
+print("subscribed "  "rejected") #true
+print("subscribed" != "rejected") #false
+ 
+
+#assign values to variables,  values like booleans, strings, and numbers called= TYPES
+#Booleans, strings, and numbers are called types because they define the nature 
+# of the values that can be used in a program, each with distinct properties and operations.
+
+name = "Nic"#string is Nic to variable name
+age = 28 #integer
+is_active = True #booolean 
+# If we are unsure of a value type, we can check it!
+is_ready = True
+print(type(is_ready))
+
+my_ownage = 26
+print(type(my_ownage))
+print("next item")
+#next are bool, float, str, and int
+is_ready = True
+fuel_deposit = 59.09
+best_grade = "A"
+number_of_pets = 2
+print(type(is_ready))
+print(type(fuel_deposit))
+print(type(best_grade))
+print(type(number_of_pets))
+print("next item 2")
+
+#exploring built-in functions
+age = "17" #str
+print(type(age)) 
+converted_age = int(age) 
+print(type(converted_age))
+print(converted_age <18) #17<18 true
+##str() function allows us to take 
+# numerical values and convert them to strings.
+password = 98079
+old_password = "81k39"
+print(str(password) == old_password)
+print(type(password))#int
+print(type(old_password))#str
+
+price = 9.99
+print(int(price))# we use int() to remove float round it up
+#for the opposite to turn into a float we use:
+weeks = 12
+print( float (weeks)) #12.0
+#THE FOLLOWING, we use bool value 0 to indicate false and anything with content to indicate true
+pets = 3
+kids = 0
+has_pets = bool(pets)#true
+has_kids = bool(kids)#false
+
+print(has_pets)
+print(has_kids)
+#convert reponse into trueif detail string not empty
+detail = "I like it"
+response = bool(detail)
+print(response) #true
+
+#new
+print("What's your name?")
+name_input = input() #To ge tinput from a user in a Python program, we use the input function.
+print(f"Hi, {name_input}")
+
+user_input_1 = input("Enter a number: ")
+user_input_2 = input("Enter another number: ")
+print(user_input_1)
+print(user_input_2)
+
+#other
+answer = "Matisse"
+answer = "Picasso"
+if answer != "Picasso":
+    print( answer + " is wrong")
+
+score = 51
+pass_grade = score > 50
+if pass_grade:
+    print("Passed!")
