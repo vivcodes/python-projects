@@ -1,0 +1,60 @@
+is_day = True
+if is_day:
+    print("Lights off!")#true
+else: print("Lights on!")#false
+
+#other example
+number = 8
+
+if number == 1:
+    print("It's 1")
+else:#conditional
+    print("It's not 1")
+
+chosen_number = 7
+if chosen_number == 12:
+    print("You guessed right!")
+else:
+    print("Have another go")
+#if and else statements 
+hour = 9
+if hour < 12:
+    print("Good morning")
+else:
+    print("Good night")
+
+#another example:
+hour = 14
+if hour < 12:
+    print("Good morning")
+elif hour < 17: #elif is else if, when there's a 2nd condition to be checked 
+    #when if block is not met
+    print("Good afternoon")
+
+#another sample but with else and elif
+hour = 18
+if hour < 12:
+    print("Good morning")
+elif hour < 17:
+    print("Good afternoon")
+else:
+    print("Good night")
+
+#more samples but more detailed
+hour = 24
+if hour < 12:
+    print("Good morning")
+elif hour < 17:
+    print("Good afternoon")
+elif hour < 21:
+    print("Good evening")
+else:
+    print("Good night")
+#note when if and elif ststaments return to false, else statement runs 
+
+#complex decisions
+age = 17
+has_permit = True
+if age > 16 and has_permit: #and operator allows to run code if both conditions are true
+    print("Can drive")
+    
